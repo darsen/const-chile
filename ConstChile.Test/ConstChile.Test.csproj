@@ -80,7 +80,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config.bacl" />
+    <None Include="App.config.back" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

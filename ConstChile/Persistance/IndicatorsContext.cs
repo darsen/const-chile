@@ -15,8 +15,8 @@ namespace ConstChile.Persistance
     {
         public IndicatorsContext()
         {
-            Debug.Write(Database.Connection.ConnectionString);
-            Database.SetInitializer<IndicatorsContext>(new DropCreateDatabaseIfModelChanges<IndicatorsContext>());
+            Debug.Write("Connection String:" + Database.Connection.ConnectionString);
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<IndicatorsContext>());
         }
 
         public DbSet<UF> UFs { get; set; }
