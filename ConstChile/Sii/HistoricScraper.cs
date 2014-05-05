@@ -69,21 +69,40 @@ namespace ConstChile.Sii
 
         private static bool ScrapingForTheFirstTime(IndicatorsContext context)
         {
-            return context.UFs.Any();
+            bool anyUfInDB = context.UFs.Any();
+            return !anyUfInDB;
+        }
+
+        private void ScrapeCompleteHistory()
+            
+        {
+            foreach (var year in Enumerable.Range(StartYear, EndYear - StartYear))
+            {
+                Scrape(year);
+            }
         }
 
         private void ScrapeCurrentAndNextYear()
         {
-            foreach (var year in Enumerable.Range(StartYear, EndYear - StartYear))
+            foreach (var year in Enumerable.Range(EndYear - 1, 1))
             {
-                var ufScraper = new UFScraper(year);
-                ufScraper.Extract();
-                UFs.AddRange(ufScraper.UFs);
+                Scrape(year);
+            }
+        }
 
-                var dolarScraper = new DolarScraper(year);
-                dolarScraper.Extract();
-                Dolars.AddRange(dolarScraper.Dolars);
+        private void Scrape(int year)
+        {
+            var ufScraper = new UFScraper(year);
+            ufScraper.Extract();
+            UFs.AddRange(ufScraper.UFs);
 
+            var dolarScraper = new DolarScraper(year);
+            dolarScraper.Extract();
+            Dolars.AddRange(dolarScraper.Dolars);
+
+            //TODO: Scrape more historic data
+            if (year > 2006)
+            {
                 var monthlyScraper = new MonthlyScraper(year);
                 monthlyScraper.Extract();
 
@@ -96,18 +115,6 @@ namespace ConstChile.Sii
             }
         }
 
-        private void ScrapeCompleteHistory()
-        {
-            foreach (var year in Enumerable.Range(EndYear, 1))
-            {
-                var ufScraper = new UFScraper(year);
-                ufScraper.Extract();
-                UFs.AddRange(ufScraper.UFs);
 
-                var dolarScraper = new DolarScraper(year);
-                dolarScraper.Extract();
-                Dolars.AddRange(dolarScraper.Dolars);
-            }
-        }
     }
 }

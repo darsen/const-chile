@@ -41,28 +41,33 @@ namespace ConstChile.Sii
 
         public override Indicator CreateIndicator(Cell cell, string cleanValue)
         {
-            if (cell.Column == (int)Column.UTM)
+            var indicatorOffset = 0;
+            if (this.Year < 2009)
+            {
+                indicatorOffset = 1;
+            }
+            if (cell.Column == (int)Column.UTM + indicatorOffset)
             {
                 return new UTM {Date = Date(cell), Value = Value(cleanValue)};
             }
-            if (cell.Column == (int)Column.UTA)
+            if (cell.Column == (int)Column.UTA + indicatorOffset)
             {
                 return new UTA {Date = Date(cell), Value = Value(cleanValue)};
             }
-            if (cell.Column == (int)Column.IPCPunto)
+            if (cell.Column == (int)Column.IPCPunto + indicatorOffset)
             {
                 return new IPCPunto() {Date = Date(cell), Value = Value(cleanValue)};
 
             }
-            if (cell.Column == (int)Column.IPC) 
+            if (cell.Column == (int)Column.IPC + indicatorOffset) 
             {
                 return new IPC() {Date = Date(cell), Value = Value(cleanValue)};
             }
-            if (cell.Column == (int)Column.IPCAcumuladoAno)
+            if (cell.Column == (int)Column.IPCAcumuladoAno + indicatorOffset)
             {
                 return new IPCAcumuladoAno() {Date = Date(cell), Value = Value(cleanValue)};
             }
-            if (cell.Column == (int)Column.IPCAcumulado12Meses)
+            if (cell.Column == (int)Column.IPCAcumulado12Meses + indicatorOffset)
             {
                 return new IPCAcumulado12Meses() {Date = Date(cell), Value = Value(cleanValue)};
             }
@@ -76,8 +81,8 @@ namespace ConstChile.Sii
 
         private DateTime Date(Cell cell)
         {
-            return new DateTime(Year, cell.Column - CurrentLayout().ColumnOffset + 1,
-                                cell.Row - CurrentLayout().RowOffset + 1);
+            int firstOfEveryMonth = 1;
+            return new DateTime(Year, cell.Row - CurrentLayout().RowOffset + 1, firstOfEveryMonth);
         }
 
         public override void Add(Indicator indicator)

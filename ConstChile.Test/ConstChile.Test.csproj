@@ -70,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Given_MonthlyScraper_For_Year_2013.cs" />
     <Compile Include="Given_DolarScraper_For_Year_1992.cs" />
     <Compile Include="Given_UFScraper_For_Leap_Year_1992.cs" />
     <Compile Include="Given_UFScraper_For_Year_1994_In_Old_Format.cs" />
