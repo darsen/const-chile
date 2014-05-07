@@ -71,7 +71,11 @@ namespace ConstChile.Sii
             var indicator = CreateIndicator(cell, cleanValue);
             Add(indicator);
             //Output array creation code with all values for a given year ideal for test-after
-            Console.Write("new Dolar() { Date = new DateTime(" + Year + "," + (cell.Column -1) + "," + (cell.Row-1) + "), Value = " + indicator.Value + "m},");
+            try{
+                Console.Write("new Dolar() { Date = new DateTime(" + Year + "," + (cell.Column -1) + "," + (cell.Row-1) + "), Value = " + indicator.Value + "m},");
+            }catch{
+
+            }
         }
 
         public abstract Indicator CreateIndicator(Cell cell, string cleanValue);
