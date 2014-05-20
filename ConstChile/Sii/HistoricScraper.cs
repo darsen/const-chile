@@ -47,24 +47,42 @@ namespace ConstChile.Sii
                 {
                     ScrapeCurrentAndNextYear();
                 }
-                context.UFs.AddRange(UFs);
-                context.SaveChanges();
-                context.Dolars.AddRange(Dolars);
-                context.SaveChanges();
-                context.UTMs.AddRange(UTMs);
-                context.SaveChanges();
-                context.UTAs.AddRange(UTAs);
-                context.SaveChanges();
-                context.IPCPuntos.AddRange(IPCPuntos);
-                context.SaveChanges();
-                context.IPCs.AddRange(IPCs);
-                context.SaveChanges();
-                context.IPCAcumulados12Meses.AddRange(IPCAcumulado12UltimosMeses);
-                context.SaveChanges();
-                context.IPCAcumuladoAnos.AddRange(IPCAcumuladoDelAno);
-                context.SaveChanges();
+                RemoveDuplicates(context);
+                PersistHistory(context);
             }
 
+        }
+
+        private void RemoveDuplicates(IndicatorsContext context)
+        {
+            UFs.RemoveAll(it => context.UFs.Any(saved => it.Date==saved.Date));
+            Dolars.RemoveAll(it => context.Dolars.Any(saved => it.Date == saved.Date));
+            UTMs.RemoveAll(it => context.UTMs.Any(saved => it.Date == saved.Date));
+            UTAs.RemoveAll(it => context.UTAs.Any(saved => it.Date == saved.Date));
+            IPCPuntos.RemoveAll(it => context.IPCPuntos.Any(saved => it.Date == saved.Date));
+            IPCs.RemoveAll(it => context.IPCs.Any(saved => it.Date == saved.Date));
+            IPCAcumulado12UltimosMeses.RemoveAll(it => context.IPCAcumulados12Meses.Any(saved => it.Date == saved.Date));
+            IPCAcumuladoDelAno.RemoveAll(it => context.IPCAcumuladoAnos.Any(saved => it.Date == saved.Date));
+        }
+
+        private void PersistHistory(IndicatorsContext context)
+        {
+            context.UFs.AddRange(UFs);
+            context.SaveChanges();
+            context.Dolars.AddRange(Dolars);
+            context.SaveChanges();
+            context.UTMs.AddRange(UTMs);
+            context.SaveChanges();
+            context.UTAs.AddRange(UTAs);
+            context.SaveChanges();
+            context.IPCPuntos.AddRange(IPCPuntos);
+            context.SaveChanges();
+            context.IPCs.AddRange(IPCs);
+            context.SaveChanges();
+            context.IPCAcumulados12Meses.AddRange(IPCAcumulado12UltimosMeses);
+            context.SaveChanges();
+            context.IPCAcumuladoAnos.AddRange(IPCAcumuladoDelAno);
+            context.SaveChanges();
         }
 
         private static bool ScrapingForTheFirstTime(IndicatorsContext context)
