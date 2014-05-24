@@ -10,13 +10,14 @@ using ConstChile.Indicators;
 
 namespace ConstChile.Persistance
 {
-    [DbConfigurationType(typeof(Configuration))] 
+    [DbConfigurationType(typeof(ConstChileDbConfiguration))] 
     public class IndicatorsContext : DbContext
     {
         public IndicatorsContext()
+            : base("Data Source=localhost; Database=ConstChile;Integrated Security=True;")   
         {
             Debug.Write("Connection String:" + Database.Connection.ConnectionString);
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<IndicatorsContext>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<IndicatorsContext>());            
         }
 
         public DbSet<UF> UFs { get; set; }
@@ -30,7 +31,7 @@ namespace ConstChile.Persistance
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
+         
         }
     }
 }
