@@ -72,7 +72,7 @@ namespace ConstChile.Sii
             Add(indicator);
             //Output array creation code with all values for a given year ideal for test-after
             try{
-                Console.Write("new Dolar() { Date = new DateTime(" + Year + "," + (cell.Column -1) + "," + (cell.Row-1) + "), Value = " + indicator.Value + "m},");
+                //Console.Write("new Dolar() { Date = new DateTime(" + Year + "," + (cell.Column -1) + "," + (cell.Row-1) + "), Value = " + indicator.Value + "m},");
             }catch{
 
             }

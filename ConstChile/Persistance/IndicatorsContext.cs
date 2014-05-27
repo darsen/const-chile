@@ -14,7 +14,7 @@ namespace ConstChile.Persistance
     public class IndicatorsContext : DbContext
     {
         public IndicatorsContext()
-            : base("Data Source=localhost; Database=ConstChile;Integrated Security=True;")   
+            : base("Server=tcp:vcery1gqes.database.windows.net,1433;Database=ConstChile;User ID=LnkCampaigner@vcery1gqes;Password=CocaCola123;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;")   
         {
             Debug.Write("Connection String:" + Database.Connection.ConnectionString);
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<IndicatorsContext>());            
