@@ -4,7 +4,7 @@ const-chile
 Aplicación para "scraping" y servicios web de valores de distintos indicadores económicos en Chile.
 
 
-## Fuentes
+## Fuente de datos
 
 Aplicación obtiene los datos realizando "web scraping" de los datos publicados en el [Sitio web de Servicio de Impuestos Internos](http://www.sii.cl/pagina/valores/valyfechas.htm).
 
