@@ -1,7 +1,7 @@
 ﻿using ConstChile.Sii;
 using NUnit.Framework;
 
-namespace ConstChile.Test
+namespace ConstChile.Test.Integration
 {
     public class Given_HistoricScraper
     {

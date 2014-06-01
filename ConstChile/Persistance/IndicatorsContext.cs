@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ConstChile.Indicators;
 using System.Data.Entity;
-using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ConstChile.Indicators;
 
 namespace ConstChile.Persistance
 {
@@ -20,7 +15,7 @@ namespace ConstChile.Persistance
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<IndicatorsContext>());            
         }
 
-        public DbSet<UF> UFs { get; set; }
+        public virtual IDbSet<UF> UFs { get; set; }
         public DbSet<Dolar> Dolars { get; set;}
         public DbSet<UTA> UTAs { get; set; }
         public DbSet<UTM> UTMs { get; set; }
@@ -32,6 +27,10 @@ namespace ConstChile.Persistance
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
          
+        }
+
+        public virtual bool Empty() {
+           return  !UFs.Any(); 
         }
     }
 }

@@ -6,11 +6,12 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 
 namespace WS.Controllers
 {
-
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/Dolar")]
     public class DolarController : ApiController
     {

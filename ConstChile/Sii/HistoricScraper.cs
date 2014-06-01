@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ConstChile.Indicators;
 using ConstChile.Persistance;
+using System.Data.Entity;
 
 namespace ConstChile.Sii
 {
@@ -37,7 +38,7 @@ namespace ConstChile.Sii
 
         public void ExtractAll()
         {
-            using (var context = new IndicatorsContext())
+            using (var context = CreateContext())
             {
                 if (ScrapingForTheFirstTime(context))
                 {
@@ -53,7 +54,12 @@ namespace ConstChile.Sii
 
         }
 
-        private void RemoveDuplicates(IndicatorsContext context)
+        public virtual IndicatorsContext CreateContext()
+        {
+            return new IndicatorsContext();
+        }
+
+        public virtual void RemoveDuplicates(IndicatorsContext context)
         {
             UFs.RemoveAll(it => context.UFs.Any(saved => it.Date==saved.Date));
             Dolars.RemoveAll(it => context.Dolars.Any(saved => it.Date == saved.Date));
@@ -65,9 +71,9 @@ namespace ConstChile.Sii
             IPCAcumuladoDelAno.RemoveAll(it => context.IPCAcumuladoAnos.Any(saved => it.Date == saved.Date));
         }
 
-        private void PersistHistory(IndicatorsContext context)
+        public virtual void PersistHistory(IndicatorsContext context)
         {
-            context.UFs.AddRange(UFs);
+            ((DbSet<UF>)context.UFs).AddRange(UFs);
             context.SaveChanges();
             context.Dolars.AddRange(Dolars);
             context.SaveChanges();
@@ -85,13 +91,12 @@ namespace ConstChile.Sii
             context.SaveChanges();
         }
 
-        private static bool ScrapingForTheFirstTime(IndicatorsContext context)
-        {
-            bool anyUfInDB = context.UFs.Any();
-            return !anyUfInDB;
+        private bool ScrapingForTheFirstTime(IndicatorsContext context)
+        {                        
+            return context.Empty();
         }
 
-        private void ScrapeCompleteHistory()
+        public virtual void ScrapeCompleteHistory()
             
         {
             foreach (var year in Enumerable.Range(StartYear, EndYear - StartYear))
@@ -100,7 +105,7 @@ namespace ConstChile.Sii
             }
         }
 
-        private void ScrapeCurrentAndNextYear()
+        public virtual void ScrapeCurrentAndNextYear()
         {
             foreach (var year in Enumerable.Range(EndYear - 1, 1))
             {

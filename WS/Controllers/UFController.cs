@@ -6,11 +6,12 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 
 namespace WS.Controllers
 {
-
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     [RoutePrefix("api/UF")]
     public class UFController : ApiController
     {
@@ -32,7 +33,7 @@ namespace WS.Controllers
             ufs = new List<UF>(1);
             if (DateTime.TryParse(id, out date))
             {
-                var uf = await db.UFs.FindAsync(date);
+                var uf = await ((DbSet<UF>)db.UFs).FindAsync(date);
                 ufs.Add(uf);
             }
             else { 
