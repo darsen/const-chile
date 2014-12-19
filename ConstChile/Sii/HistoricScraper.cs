@@ -107,7 +107,7 @@ namespace ConstChile.Sii
 
         public virtual void ScrapeCurrentAndNextYear()
         {
-            foreach (var year in Enumerable.Range(EndYear - 1, 1))
+            foreach (var year in Enumerable.Range(EndYear - 1, 2))
             {
                 Scrape(year);
             }
